@@ -47,6 +47,7 @@ function encryptQuestionFile(infilename, outfilename){
 
 }
 
+/*
 const languages = [
     "en",
     "es",
@@ -58,6 +59,11 @@ const languages = [
     "pl",
     "es-419",
     "pt-BR"
+];
+*/
+
+const languages = [
+    "en"
 ];
 
 languages.forEach((language)=>{
