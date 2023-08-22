@@ -1,10 +1,16 @@
-const { writeFileSync } = require('fs');
+const fs = require('fs');
 const { languages } = require('./languages');
 
 async function downloadFile(url, filename) {
     const response = await fetch(url);
     const json = await response.json();
-    writeFileSync(filename, JSON.stringify(json, null, 2), 'utf8');
+    fs.writeFileSync(filename, JSON.stringify(json, null, 2), 'utf8');
+}
+
+// ensure temp folder exists
+var dir = './temp';
+if (!fs.existsSync(dir)){
+    fs.mkdirSync(dir);
 }
 
 console.log("Download teams metadata");
