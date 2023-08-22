@@ -1,4 +1,5 @@
 var CryptoJS = require("crypto-js");
+const { languages } = require('./languages');
 const { readFileSync, writeFileSync } = require('fs');
 
 var key = 'cedeac05084fb9a7d748a69744735650d95edec3a6a95cc5449f99f1aa47bfeb';
@@ -27,19 +28,6 @@ function encryptQuestionFile(infilename, outfilename){
     }
 
 }
-
-const languages = [
-    "en",
-    "es",
-    "fr",
-    "it",
-    "de",
-    "pt",
-    "tr",
-    "pl",
-    "es-419",
-    "pt-BR"
-];
 
 languages.forEach((language)=>{
     console.log("encrypting "+language);

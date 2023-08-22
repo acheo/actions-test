@@ -1,5 +1,6 @@
 const http = require('http');
 const fs = require('fs');
+const { languages } = require('./languages');
 
 function downloadFile(url, filename) {
     http.get(url, (res) => {
@@ -12,19 +13,6 @@ function downloadFile(url, filename) {
         });
     })
 }
-
-const languages = [
-    "en",
-    "es",
-    "fr",
-    "it",
-    "de",
-    "pt",
-    "tr",
-    "pl",
-    "es-419",
-    "pt-BR"
-];
 
 languages.forEach((language)=>{
     console.log("downloading "+language);
