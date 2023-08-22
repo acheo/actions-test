@@ -13,7 +13,7 @@ async function extractFile(language) {
     const inFile = "./temp/translations.json";
     const outFile = "./uploads/translation-"+language+".json";
 
-    jq.run(filter, inFile, options)
+    await jq.run(filter, inFile, options)
     .then((output) => {
         fs.writeFileSync(outFile,output);
         console.log("saved "+outFile);
@@ -23,7 +23,11 @@ async function extractFile(language) {
     })
 }
 
-languages.forEach((language)=>{
-    console.log("extracting "+language);
-    extractFile(language);
-})
+async function loopFunc() {
+    for (const language of languages){
+        console.log("extracting "+language);
+        await extractFile(language);
+    }
+}
+
+loopFunc();
