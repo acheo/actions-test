@@ -14,6 +14,12 @@ function downloadFile(url, filename) {
     })
 }
 
+console.log("Download teams metadata");
+downloadFile("http://strapi-v2.eastus.cloudapp.azure.com:1337/api/teams?populate=*","./uploads/teams.json");
+
+console.log("Download frontend translations");
+downloadFile("http://strapi-v2.eastus.cloudapp.azure.com:1337/api/translations","./temp/translations.json");
+
 languages.forEach((language)=>{
     console.log("downloading "+language);
 

@@ -1,8 +1,8 @@
-var CryptoJS = require("crypto-js");
+const CryptoJS = require("crypto-js");
 const { languages } = require('./languages');
 const { readFileSync, writeFileSync } = require('fs');
 
-var key = 'cedeac05084fb9a7d748a69744735650d95edec3a6a95cc5449f99f1aa47bfeb';
+const key = 'cedeac05084fb9a7d748a69744735650d95edec3a6a95cc5449f99f1aa47bfeb';
 
 function encryptQuestionFile(infilename, outfilename){
 
