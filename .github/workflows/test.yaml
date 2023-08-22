@@ -1,0 +1,29 @@
+# Name of workflow as seen in Github actions tab
+name: github-action-test
+# Run workflow manually or on push to master branch
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+jobs:
+  # To build the project
+  build-project:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checking out code
+        uses: actions/checkout@v3
+      - name: Download Quiz Question JSON en
+        run: curl -g "http://strapi-v2.eastus.cloudapp.azure.com:1337/api/questions?populate[0]=media.url&populate[1]=answers.media.url&filters[enabled][$eq]=true&filters[quizPack][$eq]=WWC23" | jq . > ./questions-en.json
+      - name: Setup encryption dependencies
+        run: npm install
+      - name: Encrypt question json
+        run: node encrypt.js
+      - name: Prune question json en
+        run: cat ./questions-enc-en.json | jq "del(.data[].attributes.createdAt,.data[].attributes.updatedAt,.data[].attributes.enabled,.data[].attributes.quizPack,.data[].attributes.tags,.data[].attributes.locale, .data[].attributes.relatedCountry, .data[].attributes.media.data.attributes.formats, .data[].attributes.answers[].media.data.attributes.formats)" > ./uploads/questions-enc-en.json
+      - name: Download teams metadata
+        run: curl -g "http://strapi-v2.eastus.cloudapp.azure.com:1337/api/teams?populate=*" | jq . > ./uploads/teams.json
+      - name: Download frontend translations
+        run: curl -g "http://strapi-v2.eastus.cloudapp.azure.com:1337/api/translations" > translations.json
+      - name: Extract translation-en.json
+        run: cat translations.json | jq ".data | map({(.attributes.key)${{ ':' }} .attributes.value_en}) | add" > ./uploads/translation-en.json
