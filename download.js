@@ -5,6 +5,7 @@ async function downloadFile(url, filename) {
     const response = await fetch(url);
     const json = await response.json();
     fs.writeFileSync(filename, JSON.stringify(json, null, 2), 'utf8');
+    console.log("saved "+filename);
 }
 
 // ensure temp folder exists
