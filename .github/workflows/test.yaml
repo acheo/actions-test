@@ -15,11 +15,11 @@ jobs:
         uses: actions/checkout@v3
       - name: Setup node dependencies
         run: npm install
-      - name: Download Quiz Question JSON
+      - name: Download JSON from Strapi
         run: node download.js
+      - name: Extract front end translations
+        run: node extract.js
       - name: Encrypt question JSON
         run: node encrypt.js
       - name: Prune question JSON en
         run: cat ./questions-enc-en.json | jq "del(.data[].attributes.createdAt,.data[].attributes.updatedAt,.data[].attributes.enabled,.data[].attributes.quizPack,.data[].attributes.tags,.data[].attributes.locale, .data[].attributes.relatedCountry, .data[].attributes.media.data.attributes.formats, .data[].attributes.answers[].media.data.attributes.formats)" > ./uploads/questions-enc-en.json
-      - name: Extract translation-en.json
-        run: cat ./temp/translations.json | jq ".data | map({(.attributes.key)${{ ':' }} .attributes.value_en}) | add" > ./uploads/translation-en.json
