@@ -1,17 +1,10 @@
-const http = require('http');
-const fs = require('fs');
+const { writeFileSync } = require('fs');
 const { languages } = require('./languages');
 
-function downloadFile(url, filename) {
-    http.get(url, (res) => {
-        const fileStream = fs.createWriteStream(filename);
-        res.pipe(fileStream);
-
-        fileStream.on('finish', () => {
-            fileStream.close();
-            console.log('Downloaded ' + url)
-        });
-    })
+async function downloadFile(url, filename) {
+    const response = await fetch(url);
+    const json = await response.json();
+    writeFileSync(filename, JSON.stringify(json, null, 2), 'utf8');
 }
 
 console.log("Download teams metadata");
