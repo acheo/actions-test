@@ -9,7 +9,7 @@ async function pruneFile(language) {
     const inFile = "./temp/questions-enc-"+language+".json";
     const outFile = "./uploads/questions-enc-"+language+".json";
 
-    jq.run(filter, inFile, options)
+    await jq.run(filter, inFile, options)
     .then((output) => {
         fs.writeFileSync(outFile,output);
         console.log("saved "+outFile);
@@ -19,7 +19,11 @@ async function pruneFile(language) {
     })
 }
 
-languages.forEach((language)=>{
-    console.log("pruning "+language);
-    pruneFile(language);
-})
+async function main() {
+    for (const language of languages){
+        console.log("pruning "+language);
+        await pruneFile(language);
+    }
+}
+
+main();

@@ -23,11 +23,11 @@ async function extractFile(language) {
     })
 }
 
-async function loopFunc() {
+async function main() {
     for (const language of languages){
         console.log("extracting "+language);
         await extractFile(language);
     }
 }
 
-loopFunc();
+main();
